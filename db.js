@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 const conn = () => {
   mongoose
     .connect(process.env.DB_URI, {
-      dbName: "starter-project", //DB name
+      dbName: "nodejs-starter-project", //DB name
     })
     .then(() => {
       console.log("DB Connected"); //success message

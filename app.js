@@ -1,8 +1,10 @@
 import express from "express";
+import "express-async-errors"
 import bodyParser from "body-parser";
 import cors from "cors";
 import dotenv from "dotenv";
 import router from "./src/routers/index.js";
+import errorHandler from "./src/middlewares/errorHandler.js";
 
 dotenv.config();
 
@@ -18,6 +20,9 @@ app.get("/", (req, res) => {
 });
 
 app.use('/api', router);
+
+// Error handler
+app.use(errorHandler);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
