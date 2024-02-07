@@ -1,3 +1,4 @@
+import User from '../models/userModel.js';
 
 //login
 const login = async (req, res) => {
@@ -9,4 +10,4 @@ const register = async (req, res) => {
     console.log(req.body);
 }
 
-export default { login, register}
+export { login, register}
