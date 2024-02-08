@@ -1,6 +1,7 @@
 import User from "../models/userModel.js";
 import APIError from "../utils/errors.js";
 import bcrypt from "bcrypt";
+import Response from "../utils/response.js";
 
 //login
 const login = async (req, res) => {
@@ -17,7 +18,7 @@ const login = async (req, res) => {
 const register = async (req, res) => {
   const { email } = req.body;
 
-  const userCheck = await User.findOne({ email }); 
+  const userCheck = await User.findOne({ email });
 
   if (userCheck) {
     throw new APIError("Email already exists!", 401);
@@ -27,24 +28,16 @@ const register = async (req, res) => {
 
   console.log("hash şifre : ", req.body.password);
 
-  try {
-    const userSave = new User(req.body);
+  const userSave = new User(req.body);
 
-    await userSave
-      .save()
-      .then((response) => {
-        return res.status(201).json({
-          success: true,
-          message: "Kullanıcı Kayıt Edildi !",
-          data: response,
-        });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  } catch (error) {
-    console.log("error", error);
-  }
+  await userSave
+    .save()
+    .then((data) => {
+      return new Response(data, "User created !").created(res);
+    })
+    .catch((err) => {
+      throw new APIError( 400);
+    });
 };
 
 export { login, register };
