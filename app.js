@@ -1,12 +1,13 @@
-import express from "express";
 import "express-async-errors"
-import bodyParser from "body-parser";
-import cors from "cors";
+import express from "express";
 import dotenv from "dotenv";
-import router from "./src/routers/index.js";
+import router from "./src/routers/index.js";  
 import errorHandler from "./src/middlewares/errorHandler.js";
+import conn from "./db.js";
 
 dotenv.config();
+
+conn();
 
 const app = express();
 const port = process.env.PORT || 5000;
