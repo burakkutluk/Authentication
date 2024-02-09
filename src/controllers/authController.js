@@ -2,16 +2,28 @@ import User from "../models/userModel.js";
 import APIError from "../utils/errors.js";
 import bcrypt from "bcrypt";
 import Response from "../utils/response.js";
+import createToken from "../middlewares/auth.js";
 
 //login
 const login = async (req, res) => {
-  console.log(req.body);
 
-  return res.status(200).json({
-    success: true,
-    message: "Giriş Başarılı !",
-    data: req.body,
-  });
+  const { email, password } = req.body;
+
+  const user = await User.findOne({ email });
+
+  if (!user) {
+    throw new APIError("User not found!", 404);
+  }
+
+  const match = await bcrypt.compare(password, user.password);
+
+  if (!match) {
+    throw new APIError("Password is incorrect!", 401);
+  }
+
+  //create token
+  createToken(user, res);
+
 };
 
 //register
