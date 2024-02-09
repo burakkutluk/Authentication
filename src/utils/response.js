@@ -1,9 +1,12 @@
+// Purpose: Response class to handle response from server.
 class Response {
+  // Define a constructor with data and message parameters.
   constructor(data = null, message = null) {
     this.data = data;
     this.message = message;
   }
 
+  // Define a success method that takes a res parameter.
   success(res) {
     return res.status(200).json({
       success: true,
