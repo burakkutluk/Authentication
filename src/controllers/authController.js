@@ -2,7 +2,7 @@ import User from "../models/userModel.js";
 import APIError from "../utils/errors.js";
 import bcrypt from "bcrypt";
 import Response from "../utils/response.js";
-import createToken from "../middlewares/auth.js";
+import {createToken} from "../middlewares/auth.js";
 
 //login
 const login = async (req, res) => {
@@ -56,4 +56,8 @@ const register = async (req, res) => {
     });
 };
 
-export { login, register };
+const me = async (req, res) => {
+  return new Response(req.user, "User found!").success(res);
+};
+
+export { login, register, me };
