@@ -6,6 +6,7 @@ import errorHandler from "./src/middlewares/errorHandler.js";
 import conn from "./db.js";
 import cors from "cors";
 import corsOption from "./src/helpers/corsOptions.js";
+import mongoSanitize from "express-mongo-sanitize";
 
 // Load environment variables
 dotenv.config();
@@ -24,6 +25,9 @@ app.use(express.urlencoded({limit: "50mb", extended: true, parameterLimit: 50000
 
 // Cors
 app.use(cors(corsOption));
+
+// Data sanitization against NoSQL query injection 
+app.use(mongoSanitize());
 
 // Routes
 app.get("/", (req, res) => {
