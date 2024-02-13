@@ -10,6 +10,7 @@ import mongoSanitize from "express-mongo-sanitize";
 import path from "path";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
+import apiLimiter from "./src/middlewares/rateLimit.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -41,6 +42,8 @@ app.use("/uploads", express.static(__dirname));
 
 // Cors
 app.use(cors(corsOption));
+
+app.use("/api", apiLimiter)
 
 // Data sanitization against NoSQL query injection
 app.use(mongoSanitize());
