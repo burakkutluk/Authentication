@@ -11,6 +11,8 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 import apiLimiter from "./src/middlewares/rateLimit.js";
+import moment from "moment-timezone"
+moment.tz.setDefault("Europe/Istanbul")
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
